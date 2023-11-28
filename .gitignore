@@ -17,5 +17,7 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
-.next/
 #amplify-do-not-edit-end
+# next.js
+.next/
+/out/
