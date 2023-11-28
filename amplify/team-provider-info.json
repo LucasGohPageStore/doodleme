@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fe8ce46112b0227353e4efde2f3460e2fceb532accaa69a4d6d65d3d34994da0
-size 692
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-doodleme-dev-224413-authRole",
+      "UnauthRoleArn": "arn:aws:iam::125554563142:role/amplify-doodleme-dev-224413-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::125554563142:role/amplify-doodleme-dev-224413-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-doodleme-dev-224413-deployment",
+      "UnauthRoleName": "amplify-doodleme-dev-224413-unauthRole",
+      "StackName": "amplify-doodleme-dev-224413",
+      "StackId": "arn:aws:cloudformation:us-east-1:125554563142:stack/amplify-doodleme-dev-224413/727e6a80-8d33-11ee-b83b-124b6cb43e49",
+      "AmplifyAppId": "dlwkjd7w6b3t"
+    }
+  }
+}
