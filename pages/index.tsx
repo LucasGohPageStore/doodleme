@@ -25,8 +25,6 @@ import { ReactElement, useEffect, useState } from "react";
 import { useGetUser } from "../hooks/useSyncUser";
 import DashboardNav from "../components/nav/dashboardNav";
 import { AddIcon, UnlockIcon } from "@chakra-ui/icons";
-import SubscriptionList from "../components/list_item/subscription_item";
-import ModalForm from "../components/modal_form";
 import { useGetNoteItemList } from "../hooks/useSyncNoteItem";
 import {
 	AiFillNotification,

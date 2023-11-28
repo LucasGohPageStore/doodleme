@@ -1,6 +1,5 @@
 node_modules
 .next
-.vscode
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
