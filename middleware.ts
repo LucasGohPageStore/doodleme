@@ -20,14 +20,17 @@ export const config = {
 export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
 	const { domain, path, key } = parse(req);
 
-	if (domain === "app.dub.sh" || domain === "app.localhost:3000") {
+	if (domain === "doodleme.vercel.app" || domain === "app.doodleme.vercel.app") {
 		if (path === "/") {
 			return NextResponse.rewrite(new URL(`/dashboard`, req.url));
 		} else {
 			return NextResponse.rewrite(new URL(`${path}`, req.url));
 		}
-	} else if (domain === "dub.sh" || domain === "localhost:3000") {
-		console.log("here");
+	} else if (
+		domain === "www.doodleme.vercel.app" ||
+		domain === "doodleme.vercel.app" ||
+		domain === "localhost:3000"
+	) {
 		return NextResponse.rewrite(new URL(`/`, req.url));
 	}
 

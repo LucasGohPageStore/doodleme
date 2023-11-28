@@ -64,9 +64,9 @@ export const AuthNav: React.FC<any> = () => {
 	if (getUserData) {
 		return (
 			<Stack direction={"row"} spacing={7}>
-				<Button onClick={toggleColorMode}>
+				{/* <Button onClick={toggleColorMode}>
 					{colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-				</Button>
+				</Button> */}
 				<Menu>
 					<MenuButton
 						as={Button}

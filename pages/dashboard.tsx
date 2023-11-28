@@ -1,6 +1,6 @@
 // App.tsx
 import React, { useCallback, useState, useRef, useEffect } from "react";
-import { Stage, Layer, Line } from "react-konva";
+import { Stage, Layer, Line, Rect } from "react-konva";
 import Konva from "konva";
 import {
 	Box,
@@ -31,6 +31,8 @@ import { useGetImageUploadUrl } from "../hooks/useSyncSketch";
 import axios from "axios";
 import { useGenSketch } from "../restapi/rest-api";
 import { getRandomStyle, getRandomTitle } from "../lib/utils/utils";
+import ReviewSketchFormProps from "../components/modal_form/sketch/review_sketch_form";
+import DashboardTemplate from "../components/page_frame/dashboardTemplate";
 
 interface LineInfo {
 	tool: string;
@@ -53,8 +55,8 @@ const DrawingApp: React.FC = () => {
 	const [history, setHistory] = useState<LineInfo[][]>([[]]);
 	const [historyStep, setHistoryStep] = useState<number>(0);
 	const [redoStack, setRedoStack] = useState<LineInfo[][]>([]);
-	const [isImageGenerateLoading, setImageGenerateLoading] =
-		useState<boolean>(false);
+	const [isModalOpen, setModalOpen] = useState(false);
+	const [sketch, setSketch] = useState();
 
 	const [title, setTitle] = useState({
 		value: "",
@@ -268,9 +270,11 @@ const DrawingApp: React.FC = () => {
 					style: style,
 				},
 				{
-					onSuccess: (data) => {
+					onSuccess: (response) => {
 						// You can handle successful mutation here
-						console.log(data);
+						console.log(response);
+						setSketch(response.data);
+						setModalOpen(true);
 					},
 					onError: (error) => {
 						console.error(error);
@@ -294,6 +298,18 @@ const DrawingApp: React.FC = () => {
 			console.error(error.message || error);
 			return { isSuccess: false, message: "Error uploading image" };
 		}
+	};
+
+	const refreshTitle = async () => {
+		setTitle({
+			value: getRandomTitle(),
+			message: "",
+			isValid: true,
+		});
+	};
+
+	const closeModal = async () => {
+		setModalOpen(false);
 	};
 
 	const initForm = () => {
@@ -371,7 +387,7 @@ const DrawingApp: React.FC = () => {
 					</SliderTrack>
 					<SliderThumb />
 				</Slider>
-				<Input
+				{/* <Input
 					type="color"
 					value={color}
 					onChange={(e) => setColor(e.target.value)}
@@ -379,94 +395,124 @@ const DrawingApp: React.FC = () => {
 					h={{ base: "36px", md: "44px" }} // Adjust the height for different screen sizes
 					p={0} // Remove padding to make the color picker more compact
 					colorScheme="twitter"
-				/>
+				/> */}
 			</Stack>
 		);
 	}
 
 	return (
-		<Center
-			w="100vw"
-			h="100vh"
-			bgGradient="linear(135deg, #FDE2F3 0%, #FFFFFF 100%)"
-		>
-			<Box
-				width={{ base: "90%", md: "70%" }}
-				height="70%"
-				ref={stageContainerRef}
+		<DashboardTemplate>
+			<Center
+				w="100vw"
+				h="100vh"
+				bgGradient="linear(135deg, #FDE2F3 0%, #FFFFFF 100%)"
 			>
-				<Stack spacing={4}>
-					{MyToolbar()}
-					<Center>
-						<Stage
-							width={stageSize.width}
-							height={stageSize.height}
-							onMouseDown={handleMouseDown}
-							onMouseMove={handleMouseMove}
-							onMouseUp={handleMouseUp}
-							onTouchStart={handleTouchStart}
-							onTouchMove={handleTouchMove}
-							onTouchEnd={handleMouseUp}
-							ref={stageRef}
-							style={{
-								border: "2px solid black",
-								borderRadius: "8px",
-							}}
-						>
-							<Layer>
-								{lines.map((line, i) => (
-									<Line
-										key={i}
-										points={line.points}
-										stroke={line.color}
-										strokeWidth={line.size}
-										tension={0.5}
-										lineCap="round"
-										lineJoin="round"
-										globalCompositeOperation={
-											line.tool === "eraser"
-												? "destination-out"
-												: "source-over"
-										}
-									/>
-								))}
-							</Layer>
-						</Stage>
-					</Center>
-					<FormControl isRequired isInvalid={!title.isValid}>
+				<Box
+					width={{ base: "90%", md: "70%" }}
+					height="70%"
+					ref={stageContainerRef}
+				>
+					<Stack spacing={4}>
+						{MyToolbar()}
 						<Center>
-							<InputGroup width={stageSize.width}>
-								<Input
-									type={"text"}
-									isInvalid={!title.isValid}
-									placeholder="Enter title"
-									onChange={setInput(setTitle)}
-									defaultValue={title.value}
-									isDisabled={true}
-								/>
-								<InputRightElement width="6.5rem" padding={2}>
-									<Button
-										h="1.75rem"
-										size="sm"
-										onClick={getImageUploaderPath}
-										isLoading={
-											getImageUploadURLLoading ||
-											isGenSketchLoading
-										}
-									>
-										Generate
-									</Button>
-								</InputRightElement>
-								<FormErrorMessage>
-									{" "}
-									{title.message}
-								</FormErrorMessage>
-							</InputGroup>
+							<Stage
+								width={stageSize.width}
+								height={stageSize.height}
+								onMouseDown={handleMouseDown}
+								onMouseMove={handleMouseMove}
+								onMouseUp={handleMouseUp}
+								onTouchStart={handleTouchStart}
+								onTouchMove={handleTouchMove}
+								onTouchEnd={handleMouseUp}
+								ref={stageRef}
+								style={{
+									border: "2px solid black",
+									borderRadius: "8px",
+								}}
+							>
+								<Layer>
+									<Rect
+										x={0}
+										y={0}
+										width={stageSize.width}
+										height={stageSize.height}
+										fill="white"
+									/>
+								</Layer>
+								<Layer>
+									{lines.map((line, i) => (
+										<Line
+											key={i}
+											points={line.points}
+											stroke={line.color}
+											strokeWidth={line.size}
+											tension={0.5}
+											lineCap="round"
+											lineJoin="round"
+											globalCompositeOperation={
+												line.tool === "eraser"
+													? "destination-out"
+													: "source-over"
+											}
+										/>
+									))}
+								</Layer>
+							</Stage>
 						</Center>
-					</FormControl>
-				</Stack>
-			</Box>
-		</Center>
+						<FormControl isRequired isInvalid={!title.isValid}>
+							<Center>
+								<InputGroup width={stageSize.width}>
+									<Input
+										type={"text"}
+										isInvalid={!title.isValid}
+										placeholder="Enter title"
+										onChange={setInput(setTitle)}
+										defaultValue={title.value}
+										isDisabled={true}
+									/>
+									<InputRightElement
+										width="6.5rem"
+										padding={2}
+									>
+										<Stack direction={"row"} spacing={2}>
+											<IconButton
+												icon={<FaRedo />}
+												h="1.75rem"
+												size="sm"
+												isRound
+												aria-label="RefreshTitle"
+												onClick={refreshTitle}
+												colorScheme="teal"
+											/>
+											<Button
+												h="1.75rem"
+												size="sm"
+												onClick={getImageUploaderPath}
+												isLoading={
+													getImageUploadURLLoading ||
+													isGenSketchLoading
+												}
+											>
+												Generate
+											</Button>
+										</Stack>
+									</InputRightElement>
+									<FormErrorMessage>
+										{" "}
+										{title.message}
+									</FormErrorMessage>
+								</InputGroup>
+							</Center>
+						</FormControl>
+					</Stack>
+					<ReviewSketchFormProps
+						isModalOpen={isModalOpen}
+						closeModal={closeModal}
+						sketch={sketch}
+					/>
+				</Box>
+			</Center>
+		</DashboardTemplate>
 	);
 };
 

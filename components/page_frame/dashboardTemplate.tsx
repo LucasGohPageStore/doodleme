@@ -26,23 +26,6 @@ export default function DashboardTemplate(props : DashboardTemplateProps) {
 
 	return (
 		<>
-			<SidebarContent
-				onClose={() => onClose}
-				display={{ base: "none", md: "block" }}
-			/>
-			<Drawer
-				autoFocus={false}
-				isOpen={isOpen}
-				placement="left"
-				onClose={onClose}
-				returnFocusOnClose={false}
-				onOverlayClick={onClose}
-				size="full"
-			>
-				<DrawerContent>
-					<SidebarContent onClose={onClose}/>
-				</DrawerContent>
-			</Drawer>
 			<DashboardNav onOpen={onOpen} />
 			{props.children}
 		</>
