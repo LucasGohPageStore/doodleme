@@ -1,3 +1,29 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5cc52c8a04c8cd5904c060a845ee93dd1ba16b5ade78376a214ee75b9fcc10c6
-size 609
+/** @type {import('next').NextConfig} */
+export const reactStrictMode = true;
+export const images = {
+  domains: [
+    "www.google.com",
+    "avatar.vercel.sh",
+    "faisalman.github.io",
+    "avatars.dicebear.com",
+    "res.cloudinary.com",
+    "pbs.twimg.com",
+  ],
+};
+export async function headers() {
+  return [
+    {
+      source: "/:path*",
+      headers: [
+        {
+          key: "Referrer-Policy",
+          value: "no-referrer-when-downgrade",
+        },
+        {
+          key: "X-DNS-Prefetch-Control",
+          value: "on",
+        },
+      ],
+    },
+  ];
+}
