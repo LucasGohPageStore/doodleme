@@ -20,7 +20,10 @@ export const config = {
 export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
 	const { domain, path, key } = parse(req);
 
-	if (domain === "doodleme.vercel.app" || domain === "app.doodleme.vercel.app") {
+	if (
+		domain === "doodleme.vercel.app" ||
+		domain === "app.doodleme.vercel.app"
+	) {
 		if (path === "/") {
 			return NextResponse.rewrite(new URL(`/dashboard`, req.url));
 		} else {
@@ -33,30 +36,6 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
 	) {
 		return NextResponse.rewrite(new URL(`/`, req.url));
 	}
-
-	//   if (domain === "api.dub.sh" || domain === "api.localhost:3000") {
-	//     return ApiMiddleware(req);
-	//   }
-
-	//   if (key.length === 0) {
-	//     return RootMiddleware(req, ev);
-	//   }
-
-	//   if (home) {
-	//     if (path.startsWith("/static")) {
-	//       return NextResponse.rewrite(
-	//         new URL("/_static" + path.split("/static")[1], req.url),
-	//       );
-	//     }
-	//     if (DEFAULT_REDIRECTS[key]) {
-	//       return NextResponse.redirect(DEFAULT_REDIRECTS[key]);
-	//     }
-	//     if (RESERVED_KEYS.has(key)) {
-	//       return NextResponse.next();
-	//     }
-	//   }
-
-	//   return LinkMiddleware(req, ev);
 }
 
 export const parse = (req: NextRequest) => {
