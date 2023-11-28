@@ -13,3 +13,6 @@ projects:
         region: us-east-1
         apiId: iqqifdzug5hl3lsswt3aizsuai
         maxDepth: 4
+extensions:
+  amplify:
+    version: 3
