@@ -1,15 +1,15 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-doodleme-dev-224413-authRole",
-      "UnauthRoleArn": "arn:aws:iam::125554563142:role/amplify-doodleme-dev-224413-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::125554563142:role/amplify-doodleme-dev-224413-authRole",
+      "AuthRoleName": "amplify-doodleme-dev-133225-authRole",
+      "UnauthRoleArn": "arn:aws:iam::125554563142:role/amplify-doodleme-dev-133225-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::125554563142:role/amplify-doodleme-dev-133225-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-doodleme-dev-224413-deployment",
-      "UnauthRoleName": "amplify-doodleme-dev-224413-unauthRole",
-      "StackName": "amplify-doodleme-dev-224413",
-      "StackId": "arn:aws:cloudformation:us-east-1:125554563142:stack/amplify-doodleme-dev-224413/727e6a80-8d33-11ee-b83b-124b6cb43e49",
-      "AmplifyAppId": "dlwkjd7w6b3t"
+      "DeploymentBucketName": "amplify-doodleme-dev-133225-deployment",
+      "UnauthRoleName": "amplify-doodleme-dev-133225-unauthRole",
+      "StackName": "amplify-doodleme-dev-133225",
+      "StackId": "arn:aws:cloudformation:us-east-1:125554563142:stack/amplify-doodleme-dev-133225/86cae0a0-8daf-11ee-98e4-0abe2912d08d",
+      "AmplifyAppId": "d3a2z1bcivhlv1"
     }
   }
 }

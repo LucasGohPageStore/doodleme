@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:80b3b802475158e6a81c0bc1e02c930945b639005fb26e1e5e1e82b805acbdff
-size 514
+import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
+
+// 2. Add your color mode config
+const config: ThemeConfig = {
+	initialColorMode: "light",
+	useSystemColorMode: false,
+};
+
+// 3. extend the theme
+const theme = extendTheme({
+	config,
+	styles: {
+		global: {
+			body: {
+				bg: "#E4E5F1", // Update the background color here
+			},
+		},
+	},
+  fonts: {
+    body: "Verdana, sans-serif", // Update the font here
+    heading: "Verdana, sans-serif", // Update the font here
+  },
+});
+
+export default theme;

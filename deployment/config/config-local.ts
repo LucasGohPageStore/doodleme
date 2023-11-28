@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a8d2d46066e81ec90c088e1efbc30710a0bb95cee09176b0846987edb215357c
-size 293
+import developmentConfig from './config-development';
+const HOSTED_URL = 'http://localhost:3000';
+
+const configLocal = {
+  ...developmentConfig,
+  HOSTED_URL,
+  MODE: 'LOCAL',
+  REDIRECT_SIGN_IN: `${HOSTED_URL}/`,
+  REDIRECT_SIGN_OUT: `${HOSTED_URL}/signout/`,
+};
+
+export default configLocal;

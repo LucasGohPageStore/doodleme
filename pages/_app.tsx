@@ -1,3 +1,78 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:43fe71cb6e44471b4867b422f371b1d4b55d6515bca8aa0667717f95d5cc25e6
-size 1774
+import type { AppProps } from "next/app";
+import {
+	ChakraProvider,
+	ColorModeScript,
+	defineStyleConfig,
+	extendTheme,
+} from "@chakra-ui/react";
+import { ApolloProvider } from "@apollo/client";
+import { useEffect } from "react";
+import { Auth, Amplify } from "aws-amplify";
+import { createAppSyncClient } from "../appsync/AppSyncClient";
+import amplifyConfig from "../deployment/amplify-config";
+import theme from "../components/theme";
+import "./_app.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+Amplify.configure(amplifyConfig);
+
+function App({ Component, pageProps, router }: AppProps) {
+	const AnyComponent = Component as any;
+	const validateUserSession = async () => {
+		try {
+			await Auth.currentSession();
+		} catch (error) {
+			console.error(error);
+			const currentDomain = window.location.host;
+
+			console.log(currentDomain);
+
+			if (currentDomain.includes("app.")) {
+				router.push("/signin");
+			}
+		}
+	};
+
+	// const chakratheme = extendTheme(
+	// 	{
+	// 	  components: {
+	// 		Tag
+	// 	  }
+	// 	}
+	//   )
+
+	const getUserSession = async () => {
+		try {
+			await Auth.currentSession();
+		} catch (error) {
+			const currentDomain = window.location.host;
+
+			console.log(currentDomain);
+
+			if (currentDomain.includes("app.")) {
+				router.push("/signin");
+			}
+		}
+	};
+
+	useEffect(() => {
+		getUserSession();
+	}, []);
+
+	const queryClient = new QueryClient();
+
+	return (
+		<ChakraProvider>
+			<ApolloProvider client={createAppSyncClient(validateUserSession)}>
+				<QueryClientProvider client={queryClient}>
+					<ColorModeScript
+						initialColorMode={theme.config.initialColorMode}
+					/>
+					<AnyComponent {...pageProps} />
+				</QueryClientProvider>
+			</ApolloProvider>
+		</ChakraProvider>
+	);
+}
+
+export default App;

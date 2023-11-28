@@ -1,3 +1,4 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3b9c5ed2fcc499a422c08aaae8fb13f3430445799d848b64860eacd240016e16
-size 127
+export const color1 = "#FDE2F3"
+export const color2 = "#E5BEEC"
+export const color3 = "#917FB3"
+export const color4 = "#2A2F4F"

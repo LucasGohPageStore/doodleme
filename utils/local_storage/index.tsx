@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e4091aa6744081e5367fed13ee63465dc8cd202bc211d7cb0c85aad2c0d52098
-size 423
+export class LocalStorage {
+	static setTempEmail = async (tempEmail: string) => {
+		localStorage.setItem("pending_verification_email", tempEmail);
+	};
+	static getTempEmail = async () => {
+		return localStorage.getItem("pending_verification_email");
+	};
+	static removeTempEmail = async () => {
+		localStorage.removeItem("pending_verification_email");
+	};
+	
+	static resetStorage = async () => {
+		localStorage.clear();
+	};
+}

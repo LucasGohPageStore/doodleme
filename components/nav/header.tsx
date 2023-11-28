@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:30c0e36b47a2dea6d2f44db158c6ec6d0c5426e942f4cfb2e1f535556a1eebc9
-size 396
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { AuthNav } from "./authenticationNav";
+import Head from "next/head";
+
+export default function Header() {
+	return (
+			<Head>
+				<title>Pagestore - Subscription management platform</title>
+				<meta name="description" content="Created by Lucas Goh" />
+				<link rel="icon" href="/pagestore_bg_logo.png" />
+			</Head>
+	);
+}
