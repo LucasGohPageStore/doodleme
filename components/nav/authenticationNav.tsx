@@ -120,9 +120,9 @@ export const AuthNav: React.FC<any> = () => {
 			direction={"row"}
 			spacing={6}
 		>
-			<Button onClick={toggleColorMode}>
+			{/* <Button onClick={toggleColorMode}>
 				{colorMode === "light" ? <MoonIcon /> : <SunIcon />}
-			</Button>
+			</Button> */}
 			{/* <Button
 				as={"a"}
 				fontSize={"sm"}

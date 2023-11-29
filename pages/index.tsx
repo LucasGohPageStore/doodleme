@@ -22,10 +22,7 @@ import {
 	Link,
 } from "@chakra-ui/react";
 import { ReactElement, useEffect, useState } from "react";
-import { useGetUser } from "../hooks/useSyncUser";
 import DashboardNav from "../components/nav/dashboardNav";
-import { AddIcon, UnlockIcon } from "@chakra-ui/icons";
-import { useGetNoteItemList } from "../hooks/useSyncNoteItem";
 import {
 	AiFillNotification,
 	AiOutlineCheck,
@@ -41,45 +38,10 @@ import {
 	color3,
 	color4,
 } from "../lib/utils/constants/color-constant";
+import { useRouter } from "next/router";
 
 export default function LandingPage() {
-	// const { getUser, getUserData, getUserLoading, getUserError } = useGetUser();
-	// const {
-	// 	getNoteItemList,
-	// 	getNoteItemListData,
-	// 	getNoteItemListLoading,
-	// 	getNoteItemListError,
-	// } = useGetNoteItemList();
-	// const [isModalOpen, setModalOpen] = useState<boolean>(false);
-	// const [selectedNoteItemId, setNoteItemId] = useState<string>("");
-
-	// useEffect(() => {
-	// 	getUser();
-	// }, []);
-
-	// if (getUserLoading || !getUserData) {
-	// 	return (
-	// 		<Center w="100vw" h="100vh">
-	// 			<Spinner
-	// 				thickness="4px"
-	// 				speed="0.65s"
-	// 				emptyColor="gray.200"
-	// 				color="blue.500"
-	// 				size="xl"
-	// 			/>
-	// 		</Center>
-	// 	);
-	// }
-
-	// if (getUserError) {
-	// 	console.error(getUserError);
-
-	// 	return (
-	// 		<Center w="100vw" h="100vh">
-	// 			<Text color={"gray.500"}>Your session has expired :(</Text>
-	// 		</Center>
-	// 	);
-	// }
+	const router = useRouter();
 
 	return (
 		<>
@@ -132,6 +94,13 @@ export default function LandingPage() {
 									bg: "blue.700",
 								}}
 								size={"lg"}
+								onClick={() => {
+									router.push(
+										process.env.NODE_ENV === "development"
+											? "http://app.localhost:3000/dashboard"
+											: "http://app.pagemate.space/dashboard"
+									);
+								}}
 							>
 								Savings on Autopilot
 							</Button>
@@ -161,9 +130,17 @@ export default function LandingPage() {
 				>
 					<AspectRatio maxW="3xl" ratio={16 / 9}>
 						<iframe
-							title="naruto"
-							src="https://www.youtube.com/embed/QhBnZ6NPOY0"
+							src={
+								"https://www.loom.com/embed/3353cbd6ea0a496380c79cf47e4f5a10?sid=bbc17c75-fdce-43d8-a45e-95e1c2150ddb"
+							}
 							allowFullScreen
+							style={{
+								position: "absolute",
+								top: 0,
+								left: 0,
+								width: "100%",
+								height: "100%",
+							}}
 						/>
 					</AspectRatio>
 				</Box>
@@ -189,7 +166,7 @@ export default function LandingPage() {
 								}
 							/>
 							<Card
-								heading={"Notify on-time and reliable"}
+								heading={"On-time and reliable notifications"}
 								icon={
 									<Icon
 										as={AiOutlineFieldTime}
@@ -209,7 +186,7 @@ export default function LandingPage() {
 								}
 							/>
 							<Card
-								heading={"Never get notifi"}
+								heading={"Notify your friends"}
 								icon={
 									<Icon
 										as={AiOutlineShareAlt}
@@ -240,6 +217,13 @@ export default function LandingPage() {
 								}}
 								maxW={"350px"}
 								size={"lg"}
+								onClick={() => {
+									router.push(
+										process.env.NODE_ENV === "development"
+											? "http://app.localhost:3000/dashboard"
+											: "http://app.pagemate.space/dashboard"
+									);
+								}}
 							>
 								Savings on Autopilot
 							</Button>
@@ -280,9 +264,16 @@ export default function LandingPage() {
 				>
 					<AspectRatio maxW="3xl" ratio={16 / 9}>
 						<iframe
-							title="naruto"
-							src="https://www.youtube.com/embed/QhBnZ6NPOY0"
+							title="second video"
+							src="https://www.loom.com/embed/f2ed3994cb6540888f1e05746fad2273?sid=e15bbab8-b986-4737-9229-9e6ade6f4f9b"
 							allowFullScreen
+							style={{
+								position: "absolute",
+								top: 0,
+								left: 0,
+								width: "100%",
+								height: "100%",
+							}}
 						/>
 					</AspectRatio>
 				</Box>
@@ -315,7 +306,7 @@ export default function LandingPage() {
 							rounded={"md"}
 							alt={"feature image"}
 							src={
-								"https://images.unsplash.com/photo-1554200876-56c2f25224fa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+								"https://appresourcespagestore.s3.amazonaws.com/recur_reminders.png"
 							}
 							objectFit={"cover"}
 						/>
@@ -329,7 +320,7 @@ export default function LandingPage() {
 							rounded={"md"}
 							alt={"feature image"}
 							src={
-								"https://images.unsplash.com/photo-1554200876-56c2f25224fa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+								"https://appresourcespagestore.s3.amazonaws.com/view_all_subs.png"
 							}
 							objectFit={"cover"}
 						/>
@@ -347,9 +338,9 @@ export default function LandingPage() {
 						>
 							Keep an eye
 						</Text>
-						<Heading>Keep track on all the subscriptioins</Heading>
+						<Heading>Keep track of all the subscriptioins</Heading>
 						<Text color={"gray.500"} fontSize={"lg"}>
-							Effortlessly manage your subscribed services and
+							Effortlessly manage your subscription and
 							access them anytime. Seamlessly integrate them into
 							your financial planning or utilize them for various
 							purposes. Stay in control of your subscriptions with
@@ -386,7 +377,7 @@ export default function LandingPage() {
 							rounded={"md"}
 							alt={"feature image"}
 							src={
-								"https://images.unsplash.com/photo-1554200876-56c2f25224fa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+								"https://appresourcespagestore.s3.amazonaws.com/sample_reminder.png"
 							}
 							objectFit={"cover"}
 						/>
@@ -409,10 +400,19 @@ export default function LandingPage() {
 					<Stack direction={"row"} spacing={6}>
 						<Link href={"#"}>Home</Link>
 						<Link href={"#"}>About</Link>
-						<Link href={"#"}>Blog</Link>
-						<Link href={"#"}>Contact</Link>
+						<Link href="https://www.instagram.com/saculniotanf/">
+							Contact
+						</Link>
 					</Stack>
-					<Text>© 2022 Chakra Templates. All rights reserved</Text>
+					<Text>
+						Powered by Lucas Fancation. Built by{" "}
+						<a
+							href="https://www.instagram.com/saculniotanf/"
+							style={{ textDecoration: "underline" }}
+						>
+							Lucas Fancation
+						</a>
+					</Text>
 				</Container>
 			</Box>
 		</>
