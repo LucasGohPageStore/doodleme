@@ -142,7 +142,7 @@ export const AuthNav: React.FC<any> = () => {
 				_hover={{
 					bg: "pink.300",
 				}}
-				href={"http://app.localhost:3000/dashboard"}
+				href={"http://app.doodleme.art/dashboard"}
 			>
 				Open App
 			</Button>
