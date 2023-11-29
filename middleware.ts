@@ -20,7 +20,11 @@ export const config = {
 export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
 	const { domain, path, key } = parse(req);
 
-	if (domain === "app.doodleme.art" || domain === "app.doodleme.vercel.app") {
+	if (
+		domain === "app.doodleme.art" ||
+		domain === "app.doodleme.vercel.app" ||
+		domain === "app.localhost:3000"
+	) {
 		if (path === "/") {
 			return NextResponse.rewrite(new URL(`/dashboard`, req.url));
 		} else {

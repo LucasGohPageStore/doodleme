@@ -39,13 +39,37 @@ import {
 	color4,
 } from "../lib/utils/constants/color-constant";
 import { useRouter } from "next/router";
+import { AuthNav } from "../components/nav/authenticationNav";
+import Header from "../components/nav/header";
 
 export default function LandingPage() {
 	const router = useRouter();
 
 	return (
 		<>
-			<DashboardNav />
+			<Header />
+			<Container maxW={{ base: "3xl", sm: "5xl", md: "8xl" }}>
+				{" "}
+				<Box px={4}>
+					<Flex
+						h={16}
+						alignItems={"center"}
+						justifyContent={"space-between"}
+					>
+						<Box display={"flex"}>
+							<Image
+								boxSize="100px"
+								objectFit="cover"
+								src="pagestore_logo.png"
+							/>
+						</Box>
+
+						<Flex alignItems={"center"}>
+							<AuthNav />
+						</Flex>
+					</Flex>
+				</Box>
+			</Container>
 			<Container maxW={"3xl"}>
 				<Stack
 					as={Box}
@@ -232,7 +256,6 @@ export default function LandingPage() {
 					</Stack>
 				</Container>
 			</Box>
-
 			<Container maxW={"2xl"} py={{ base: 12, md: 30 }}>
 				<Stack
 					as={Box}
@@ -340,9 +363,9 @@ export default function LandingPage() {
 						</Text>
 						<Heading>Keep track of all the subscriptioins</Heading>
 						<Text color={"gray.500"} fontSize={"lg"}>
-							Effortlessly manage your subscription and
-							access them anytime. Seamlessly integrate them into
-							your financial planning or utilize them for various
+							Effortlessly manage your subscription and access
+							them anytime. Seamlessly integrate them into your
+							financial planning or utilize them for various
 							purposes. Stay in control of your subscriptions with
 							ease and convenience.{" "}
 						</Text>

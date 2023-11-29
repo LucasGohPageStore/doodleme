@@ -134,7 +134,7 @@ export const AuthNav: React.FC<any> = () => {
 			</Button> */}
 			<Button
 				as={"a"}
-				display={{ base: "none", md: "inline-flex" }}
+				display={"inline-flex"}
 				fontSize={"sm"}
 				fontWeight={600}
 				color={"white"}
