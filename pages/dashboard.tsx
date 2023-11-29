@@ -241,7 +241,6 @@ const DrawingApp: React.FC = () => {
 				response.data?.getImageUploadURL.uploadUrls ?? [];
 
 			const uploadPath = uploadUrls[0] ?? "";
-			console.log(uploadPath);
 			const imageBase64 = stageRef.current?.toDataURL({
 				width: 500,
 				height: 500,
@@ -255,12 +254,9 @@ const DrawingApp: React.FC = () => {
 
 			//  Upload the image by calling the image upload api
 			const result = await uploadImage(imageBytes, uploadPath);
-			console.log(result.isSuccess);
-
 			const regex = new RegExp("s3.amazonaws.com/(.+?)\\?");
 			const match = regex.exec(uploadPath);
 			const s3FilePath = match ? match[1] : "";
-			console.log(s3FilePath);
 			const style = getRandomStyle();
 			mutateGenSketch(
 				{
@@ -272,7 +268,6 @@ const DrawingApp: React.FC = () => {
 				{
 					onSuccess: (response) => {
 						// You can handle successful mutation here
-						console.log(response);
 						setSketch(response.data);
 						setModalOpen(true);
 					},
