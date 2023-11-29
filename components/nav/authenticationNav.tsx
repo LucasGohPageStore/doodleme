@@ -27,7 +27,6 @@ export const AuthNav: React.FC<any> = () => {
 	const router = useRouter();
 
 	const handleMenuChange = async (event: string) => {
-		console.log(event);
 		switch (event) {
 			case "logout":
 				await Auth.signOut();

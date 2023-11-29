@@ -22,7 +22,6 @@ export default function ConfirmationPopover(props: ConfirmationPopoverProps) {
 	const [isOKloading, setOKLoading] = useState(false);
 
 	const handleOk = async () => {
-		console.log("delete loading")
 		setOKLoading(true);
 		props.onOk();
 		await new Promise(f => setTimeout(f, 1000));

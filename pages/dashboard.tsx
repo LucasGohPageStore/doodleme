@@ -19,6 +19,7 @@ import {
 	Stack,
 	useBreakpointValue,
 	useColorModeValue,
+	useToast,
 } from "@chakra-ui/react";
 import {
 	FaEraser,
@@ -42,6 +43,8 @@ interface LineInfo {
 }
 
 const DrawingApp: React.FC = () => {
+	const toast = useToast();
+
 	const [lines, setLines] = useState<LineInfo[]>([]);
 	const [tool, setTool] = useState<string>("brush");
 	const [color, setColor] = useState<string>("#000000");
@@ -57,6 +60,8 @@ const DrawingApp: React.FC = () => {
 	const [redoStack, setRedoStack] = useState<LineInfo[][]>([]);
 	const [isModalOpen, setModalOpen] = useState(false);
 	const [sketch, setSketch] = useState();
+	const [isGeneratingLoading, setGeneratingLoading] =
+		useState<boolean>(false);
 
 	const [title, setTitle] = useState({
 		value: "",
@@ -220,7 +225,9 @@ const DrawingApp: React.FC = () => {
 			setter({ value: e.target.value, isValid: true, message: "" });
 		};
 
-	const getImageUploaderPath = () => {
+	const getImageUploaderPath = async () => {
+		setGeneratingLoading(true);
+
 		if (!title.value) {
 			setTitle({
 				value: "",
@@ -229,54 +236,82 @@ const DrawingApp: React.FC = () => {
 			});
 			return;
 		}
-		let result = getImageUploadURL({
+
+		try {
+			const uploadPath = await getUploadPath();
+			if (!uploadPath) {
+				throw new Error("Failed to get upload path.");
+			}
+
+			const imageBytes = await getImageBytes();
+			await uploadImageAndGenerateSketch(imageBytes, uploadPath);
+		} catch (error) {
+			toast({
+				title: "Failed to generate image.",
+				status: "error",
+				duration: 9000,
+				isClosable: true,
+			});
+			setGeneratingLoading(false);
+		}
+	};
+
+	const getUploadPath = async () => {
+		const response = await getImageUploadURL({
 			variables: {
 				presignedUrlRequest: {
 					count: 1,
 					mediaType: "SKETCH_FILE",
 				},
 			},
-		}).then(async (response) => {
-			const uploadUrls =
-				response.data?.getImageUploadURL.uploadUrls ?? [];
-
-			const uploadPath = uploadUrls[0] ?? "";
-			const imageBase64 = stageRef.current?.toDataURL({
-				width: 500,
-				height: 500,
-			});
-
-			// Remove mimetype
-			const base64WithoutPrefix = imageBase64?.split(",")[1];
-
-			// Convert to image bytes
-			const imageBytes = Buffer.from(base64WithoutPrefix ?? "", "base64");
-
-			//  Upload the image by calling the image upload api
-			const result = await uploadImage(imageBytes, uploadPath);
-			const regex = new RegExp("s3.amazonaws.com/(.+?)\\?");
-			const match = regex.exec(uploadPath);
-			const s3FilePath = match ? match[1] : "";
-			const style = getRandomStyle();
-			mutateGenSketch(
-				{
-					rawSketchImgPath: s3FilePath,
-					prompt: `${title.value}, ${style}`,
-					object: title.value,
-					style: style,
-				},
-				{
-					onSuccess: (response) => {
-						// You can handle successful mutation here
-						setSketch(response.data);
-						setModalOpen(true);
-					},
-					onError: (error) => {
-						console.error(error);
-					},
-				}
-			);
 		});
+
+		return response.data?.getImageUploadURL.uploadUrls?.[0] ?? "";
+	};
+
+	const getImageBytes = async () => {
+		const imageBase64 = stageRef.current?.toDataURL({
+			width: 500,
+			height: 500,
+		});
+		const base64WithoutPrefix = imageBase64?.split(",")[1];
+		return Buffer.from(base64WithoutPrefix ?? "", "base64");
+	};
+
+	const uploadImageAndGenerateSketch = async (
+		imageBytes: Buffer,
+		uploadPath: string
+	) => {
+		await uploadImage(imageBytes, uploadPath);
+
+		const s3FilePath = extractS3FilePath(uploadPath);
+		const style = getRandomStyle();
+
+		mutateGenSketch(
+			{
+				rawSketchImgPath: s3FilePath,
+				prompt: `${title.value}, ${style}`,
+				object: title.value,
+				style: style,
+			},
+			{
+				onSuccess: (response) => {
+					setSketch(response.data);
+					setModalOpen(true);
+					setGeneratingLoading(false);
+				},
+				onError: (error) => {
+					console.error(error);
+					setGeneratingLoading(false);
+				},
+			}
+		);
+	};
+
+	const extractS3FilePath = (uploadPath: string) => {
+		const regex = new RegExp("s3.amazonaws.com/(.+?)\\?");
+		const match = regex.exec(uploadPath);
+		return match ? match[1] : "";
 	};
 
 	const uploadImage = async (
@@ -483,10 +518,7 @@ const DrawingApp: React.FC = () => {
 												h="1.75rem"
 												size="sm"
 												onClick={getImageUploaderPath}
-												isLoading={
-													getImageUploadURLLoading ||
-													isGenSketchLoading
-												}
+												isLoading={isGeneratingLoading}
 											>
 												Generate
 											</Button>

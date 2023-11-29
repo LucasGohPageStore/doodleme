@@ -45,10 +45,7 @@ const appSyncFetch =
 					"x-jwt-identity-token": session.accessToken.jwtToken,
 				},
 			});
-			console.log(request)
 		} catch (error) {
-      		console.log("here");
-
 			console.log(error);
 		}
 

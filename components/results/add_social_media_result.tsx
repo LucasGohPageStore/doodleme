@@ -66,7 +66,6 @@ export default function AddSocialMediaResultForm(
 			</Center>
 		);
 	}
-	console.log(props.dataResponse.createSocialAccount);
 	return (
 		<>
 			{regex.test(props.dataResponse.createSocialAccount) ? (

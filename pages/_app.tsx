@@ -25,8 +25,6 @@ function App({ Component, pageProps, router }: AppProps) {
 			console.error(error);
 			const currentDomain = window.location.host;
 
-			console.log(currentDomain);
-
 			if (currentDomain.includes("app.")) {
 				router.push("/signin");
 			}
@@ -46,8 +44,6 @@ function App({ Component, pageProps, router }: AppProps) {
 			await Auth.currentSession();
 		} catch (error) {
 			const currentDomain = window.location.host;
-
-			console.log(currentDomain);
 
 			if (currentDomain.includes("app.")) {
 				router.push("/signin");
