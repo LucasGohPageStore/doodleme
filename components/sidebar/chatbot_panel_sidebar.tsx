@@ -89,7 +89,7 @@ export default function SidebarContent({ onClose, ...rest }: SidebarProps) {
 						<Image
 							boxSize="100px"
 							objectFit="cover"
-							src="pagestore_logo.png"
+							src="doodleme_logo.png"
 						/>
 					</Box>
 					<CloseButton

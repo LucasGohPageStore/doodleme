@@ -5,9 +5,9 @@ import Head from "next/head";
 export default function Header() {
 	return (
 			<Head>
-				<title>Pagestore - Subscription management platform</title>
+				<title>Doodleme - Unleash your imagination</title>
 				<meta name="description" content="Created by Lucas Goh" />
-				<link rel="icon" href="/pagestore_bg_logo.png" />
+				<link rel="icon" href="/doodleme_bg_logo.png" />
 			</Head>
 	);
 }
