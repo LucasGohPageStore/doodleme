@@ -271,8 +271,8 @@ const DrawingApp: React.FC = () => {
 
 	const getImageBytes = async () => {
 		const imageBase64 = stageRef.current?.toDataURL({
-			width: 500,
-			height: 500,
+			width: stageSize.width,
+			height: stageSize.height,
 		});
 		const base64WithoutPrefix = imageBase64?.split(",")[1];
 		return Buffer.from(base64WithoutPrefix ?? "", "base64");
